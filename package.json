@@ -1,0 +1,15 @@
+{
+  "name": "hcc_serverless",
+  "version": "1.0.0",
+  "description": "A demo application for the CodePen talk \"Building Event-driven Applications with Serverless\"",
+  "main": "handler.js",
+  "repository": "https://github.com/robmarshdev/hcc_serverless.git",
+  "author": "Robert Marsh <rob.dmind@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "deploy": "AWS_PROFILE=hcc-dev node_modules/.bin/serverless deploy"
+  },
+  "devDependencies": {
+    "serverless": "^1.37.1"
+  }
+}
