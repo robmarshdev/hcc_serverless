@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "serverless": "^1.37.1"
+  },
+  "dependencies": {
+    "superagent": "^4.1.0"
   }
 }
