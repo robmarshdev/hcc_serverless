@@ -7,10 +7,17 @@
   "author": "Robert Marsh <rob.dmind@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "deploy": "AWS_PROFILE=hcc-dev node_modules/.bin/serverless deploy"
+    "deploy": "AWS_PROFILE=hcc-dev node_modules/.bin/serverless deploy",
+    "invoke": "AWS_PROFILE=hcc-dev node_modules/.bin/serverless invoke"
   },
   "devDependencies": {
-    "serverless": "^1.37.1"
+    "@types/node": "^11.9.4",
+    "@types/superagent": "^3.8.6",
+    "serverless": "^1.37.1",
+    "serverless-webpack": "^5.2.0",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.3",
+    "webpack": "^4.29.5"
   },
   "dependencies": {
     "superagent": "^4.1.0"

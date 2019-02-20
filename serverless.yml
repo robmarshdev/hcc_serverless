@@ -22,6 +22,9 @@ provider:
   runtime: nodejs8.10
   region: eu-west-2
 
+plugins:
+  - serverless-webpack
+
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
 #    - Effect: "Allow"
