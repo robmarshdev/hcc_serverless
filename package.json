@@ -7,8 +7,8 @@
   "author": "Robert Marsh <rob.dmind@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "deploy": "AWS_PROFILE=hcc-dev node_modules/.bin/serverless deploy",
-    "invoke": "AWS_PROFILE=hcc-dev node_modules/.bin/serverless invoke"
+    "deploy": "node_modules/.bin/serverless deploy",
+    "invoke": "node_modules/.bin/serverless invoke"
   },
   "devDependencies": {
     "@types/node": "^11.9.4",
