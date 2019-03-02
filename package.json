@@ -13,6 +13,7 @@
   "devDependencies": {
     "@types/node": "^11.9.4",
     "@types/superagent": "^3.8.6",
+    "aws-sdk": "^2.413.0",
     "serverless": "^1.37.1",
     "serverless-pseudo-parameters": "^2.4.0",
     "serverless-webpack": "^5.2.0",
