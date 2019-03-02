@@ -35,6 +35,10 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
+        - dynamodb:DescribeStream
+        - dynamodb:ListStreams
+        - dynamodb:GetRecords
+        - dynamodb:GetShardIterator
       Resource:
         - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.tableName}
 
@@ -84,6 +88,12 @@ functions:
     events:
       - schedule: rate(24 hours)
 
+  # TODO -  make stream arn dynamic
+  dynamo_stream:
+    handler: src/dynamo-stream.handler
+    events:
+      - stream: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.tableName}/stream/2019-03-02T12:43:53.296
+
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
@@ -132,3 +142,5 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: NEW_IMAGE

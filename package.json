@@ -11,6 +11,7 @@
     "invoke": "node_modules/.bin/serverless invoke"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.20",
     "@types/node": "^11.9.4",
     "@types/superagent": "^3.8.6",
     "aws-sdk": "^2.413.0",
