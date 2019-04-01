@@ -29,3 +29,40 @@ export const create = async (filmData: FafFilmData): Promise<AWS.DynamoDB.Docume
   }
 };
 
+export const addMetadata = async (id: string, metadata: OmdbData): Promise<AWS.DynamoDB.DocumentClient.UpdateItemOutput> => {
+  const params: AWS.DynamoDB.DocumentClient.UpdateItemInput = {
+    TableName: process.env.tableName,
+    Key: {
+      "FirstId": id,
+      "SecondId": id,
+    },
+    UpdateExpression: `
+      set
+        Runtime = :runtime,
+        Genre = :genre,
+        Director = :director,
+        Actors = :actors,
+        Plot = :plot,
+        Poster = :poster,
+        Metascore = :metascore,
+        ImdbRating = :imdbRating
+    `,
+    ExpressionAttributeValues: {
+      ":runtime": metadata.Runtime,
+      ":genre": metadata.Genre,
+      ":director": metadata.Director,
+      ":actors": metadata.Actors,
+      ":plot": metadata.Plot,
+      ":poster": metadata.Poster,
+      ":metascore": metadata.Metascore,
+      ":imdbRating": metadata.ImdbRating,
+    },
+  };
+
+  try {
+    return await dynamo.update(params).promise();
+  } catch (error) {
+    console.log(`Error|Unable to add movie metadata to Dynamo|${id}`);
+    throw error;
+  }
+};

@@ -16,3 +16,14 @@ type FafFilmData = {
   release_year: number,
   certificate: "TBC" | "U" | "PG" | "12A" | "15" | "18"
 };
+
+type OmdbData = {
+  Runtime: string,
+  Genre: string[],
+  Director: string,
+  Actors: string[],
+  Plot: string,
+  Poster: string,
+  Metascore: number,
+  ImdbRating: number,
+};

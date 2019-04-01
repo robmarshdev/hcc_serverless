@@ -1,5 +1,6 @@
 import { Context, DynamoDBStreamEvent } from "aws-lambda"
 import * as Dynamo from "aws-sdk/clients/dynamodb";
+import { addMetadata } from "./dynamo/movie";
 import { get } from "superagent";
 import { formatUrlMovieTitle } from "../lib/format-url-movie-title";
 import getSSMParam from "../lib/get-ssm-param";
@@ -12,9 +13,7 @@ const handleDynamoStream = async (event: DynamoDBStreamEvent, context: Context):
   console.log(`received stream with ${event.Records.length} records`);
 
   for (const record of event.Records) {
-    if (record.eventName === "INSERT" ||
-        record.eventName === "MODIFY") {
-
+    if (record.eventName === "INSERT") {
       const body = converter(record.dynamodb.NewImage);
       console.log("stream record: ", body);
 
@@ -26,6 +25,21 @@ const handleDynamoStream = async (event: DynamoDBStreamEvent, context: Context):
         req = await get(`https://www.omdbapi.com?t=${formatUrlMovieTitle(body.Title)}&plot=full&apikey=${omdbApiKey}`);
       } else {
         req = await get(`https://www.omdbapi.com?t=${formatUrlMovieTitle(body.Title)}&plot=full`);
+      }
+
+      if (req.body.Response === "True") {
+        addMetadata(record.dynamodb.NewImage.FirstId.S, {
+          Runtime: req.body.Runtime,
+          Actors: req.body.Actors,
+          Genre: req.body.Genre,
+          Director: req.body.Director,
+          Plot: req.body.Plot,
+          Poster: req.body.Poster,
+          Metascore: req.body.Metascore,
+          ImdbRating: req.body.imdbRating,
+        });
+      } else {
+        // TODO - put onto queue and notify
       }
 
       console.log("omdb body: ", req.body);
