@@ -1,13 +1,17 @@
 import { APIGatewayProxyEvent, APIGatewayProxyCallback, APIGatewayProxyResult, Context } from "aws-lambda";
 import * as Mustache from "mustache";
+import { get } from "superagent";
 
 export const handler = async (event: APIGatewayProxyEvent, context: Context, callback: APIGatewayProxyCallback): Promise<APIGatewayProxyResult> => {
+  const url = `https://${event.headers.Host}/${event.requestContext.stage}/api/movies`;
+
+  const httpReq = await get(url);
+
+  console.log(httpReq.body);
+
   // put movies here
   const view = {
-    movies: {
-      Title: "Movie 1",
-      Poster: "https://m.media-amazon.com/images/M/MV5BNGFhOWJmMDktOWRkNy00OGIxLTk2YjMtNTZkNGE0YzViZTNlXkEyXkFqcGdeQXVyMzg2MzE2OTE@._V1_SX300.jpg",
-    },
+    movies: httpReq.body.Items,
   }
 
   let html = Mustache.render(`

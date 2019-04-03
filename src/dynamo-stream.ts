@@ -15,6 +15,9 @@ const handleDynamoStream = async (event: DynamoDBStreamEvent, context: Context):
   for (const record of event.Records) {
     if (record.eventName === "INSERT") {
       const body = converter(record.dynamodb.NewImage);
+
+      if(!body.Title) return;
+
       console.log("stream record: ", body);
 
       let req;
