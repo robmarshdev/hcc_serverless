@@ -29,6 +29,15 @@ export const create = async (filmData: FafFilmData): Promise<AWS.DynamoDB.Docume
   }
 };
 
+export const list = async (): Promise<AWS.DynamoDB.DocumentClient.ScanOutput> => {
+  // scans are bad but an approaching CodePen deadline is worse
+  const params: AWS.DynamoDB.DocumentClient.ScanInput = {
+    TableName: process.env.tableName,
+  };
+
+  return await dynamo.scan(params).promise();
+}
+
 export const addMetadata = async (id: string, metadata: OmdbData): Promise<AWS.DynamoDB.DocumentClient.UpdateItemOutput> => {
   const params: AWS.DynamoDB.DocumentClient.UpdateItemInput = {
     TableName: process.env.tableName,
