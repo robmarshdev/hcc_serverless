@@ -5,5 +5,9 @@ export const list = async (event: APIGatewayProxyEvent, context: Context, callba
   const movies = await Movies.list();
   console.log(movies);
 
-  return;
+  const response = {
+    statusCode: 200,
+    body: JSON.stringify(movies, null, 2),
+  }
+  return response;
 };

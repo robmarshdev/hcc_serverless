@@ -23,6 +23,7 @@
     "webpack": "^4.29.5"
   },
   "dependencies": {
+    "mustache": "^3.0.1",
     "superagent": "^4.1.0"
   }
 }

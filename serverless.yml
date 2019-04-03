@@ -105,7 +105,14 @@ functions:
     handler: src/api/movies.list
     events:
       - http:
-          path: /movies
+          path: /api/movies
+          method: get
+
+  movies_view:
+    handler: src/ui/movies.handler
+    events:
+      - http:
+          path: /
           method: get
 
 #    The following are a few example events you can configure
