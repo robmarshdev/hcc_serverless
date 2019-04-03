@@ -1,6 +1,4 @@
 import { APIGatewayProxyEvent, APIGatewayProxyCallback, APIGatewayProxyResult, Context } from "aws-lambda";
-import { readFile } from "fs";
-import * as path from "path";
 import * as Mustache from "mustache";
 
 export const handler = async (event: APIGatewayProxyEvent, context: Context, callback: APIGatewayProxyCallback): Promise<APIGatewayProxyResult> => {
