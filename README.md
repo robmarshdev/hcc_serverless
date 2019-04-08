@@ -20,7 +20,7 @@ In order to deploy the application you'll need an AWS account that has had a pay
 
 The DynamoDB stream ARN on line 104 of the `serverless.yml` does not populate automatically and will need updating. Open AWS, navigate to DynamoDB and select your table. In the overview tab there is a Latest stream ARN value. Copy it, uncomment lines 103 + 104 of the `serverless.yml` and replace the value of the stream ARN.
 
-**5. Deploy again **
+**5. Deploy again**
 
 Now that your DynamoDB table has been created it can be used to trigger the `dynamo_stream` function (as configured in step 4). You will need to redeploy to add this event.
 
