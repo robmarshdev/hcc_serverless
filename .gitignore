@@ -4,3 +4,13 @@ jspm_packages
 
 # Serverless directories
 .serverless
+.webpack
+
+# Terraform directories
+infrastructure/.terraform
+infrastructure/plan
+infrastructure/secrets.auto.tfvars
+
+# TODO - set up remote backend
+infrastructure/terraform.tfstate
+infrastructure/terraform.tfstate.backup

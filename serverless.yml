@@ -41,7 +41,7 @@ provider:
         - dynamodb:GetRecords
         - dynamodb:GetShardIterator
       Resource:
-        - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.tableName}
+        - ${ssm:hcc_db_arn}
     - Effect: Allow
       Action:
         - ssm:GetParametersByPath
@@ -55,7 +55,7 @@ plugins:
 
 custom:
   stage: ${opt:stage, self:provider.stage}
-  tableName: hcc-${self:custom.stage}
+  tableName: ${ssm:hcc_db_name}
 
 
 functions:
@@ -72,8 +72,8 @@ functions:
   dynamo_stream:
     handler: src/dynamo-stream.handler
     timeout: 30
-    # events:
-    #   - stream: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.tableName}/stream/2019-03-02T12:43:53.296
+    events:
+      - stream: ${ssm:hcc_db_stream_arn}
 
   movies_list:
     handler: src/api/movies.list
@@ -88,26 +88,3 @@ functions:
       - http:
           path: /
           method: get
-
-
-resources:
-  Resources:
-    hccTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ${self:custom.tableName}
-        AttributeDefinitions:
-          - AttributeName: FirstId
-            AttributeType: S
-          - AttributeName: SecondId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: FirstId
-            KeyType: HASH
-          - AttributeName: SecondId
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        StreamSpecification:
-          StreamViewType: NEW_IMAGE

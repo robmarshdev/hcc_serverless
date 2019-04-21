@@ -25,9 +25,15 @@ const handleDynamoStream = async (event: DynamoDBStreamEvent, context: Context):
 
       if (omdbApiKey) {
         // poster url is returned if you have an api key
-        req = await get(`https://www.omdbapi.com?t=${formatUrlMovieTitle(body.Title)}&plot=full&apikey=${omdbApiKey}`);
+        req = await get(`https://www.omdbapi.com?t=${formatUrlMovieTitle(body.Title)}&y=${body.ReleaseYear}&plot=full&apikey=${omdbApiKey}`);
+
+        // quick hack - try again without specifying year if not found
+        if (req.body.Response === "False") {
+          req = await get(`https://www.omdbapi.com?t=${formatUrlMovieTitle(body.Title)}&plot=full&apikey=${omdbApiKey}`);
+        }
+
       } else {
-        req = await get(`https://www.omdbapi.com?t=${formatUrlMovieTitle(body.Title)}&plot=full`);
+        req = await get(`https://www.omdbapi.com?t=${formatUrlMovieTitle(body.Title)}&y=${body.ReleaseYear}&plot=full`);
       }
 
       if (req.body.Response === "True") {

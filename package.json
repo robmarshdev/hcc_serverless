@@ -9,7 +9,9 @@
   "scripts": {
     "deploy": "node_modules/.bin/serverless deploy",
     "invoke": "node_modules/.bin/serverless invoke",
-    "remove": "node_modules/.bin/serverless remove"
+    "remove": "node_modules/.bin/serverless remove",
+    "tf_plan": "cd infrastructure && terraform plan -out plan",
+    "tf_apply": "cd infrastructure && terraform apply plan"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.20",

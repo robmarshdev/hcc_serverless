@@ -5,7 +5,7 @@ const getSSMParam = async (param: string): Promise<string | undefined> => {
 
   try {
     const result = await ssm.getParameter({
-      Name: `/hcc/${process.env.stage}/${param}`,
+      Name: `hcc_${param}`,
       WithDecryption: true,
     }).promise();
 
