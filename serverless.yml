@@ -81,6 +81,13 @@ functions:
           path: /api/movies
           method: get
 
+  listings_list:
+    handler: src/api/listings.list
+    events:
+      - http:
+          path: /api/listings
+          method: get
+
   movies_view:
     handler: src/ui/movies.handler
     events:

@@ -12,4 +12,16 @@ export const put = async (item: any): Promise<AWS.DynamoDB.DocumentClient.PutIte
   };
 
   return await dynamo.put(params).promise();
+};
+
+export const queryByFirstId = async (firstId: string): Promise<AWS.DynamoDB.DocumentClient.QueryOutput> => {
+  const params: AWS.DynamoDB.DocumentClient.QueryInput = {
+    TableName: process.env.tableName,
+    KeyConditionExpression: "FirstId = :firstId",
+    ExpressionAttributeValues: {
+      ":firstId": firstId,
+    },
+  };
+
+  return await dynamo.query(params).promise();
 }
