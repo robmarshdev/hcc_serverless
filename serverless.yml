@@ -68,7 +68,6 @@ functions:
     events:
       - schedule: rate(24 hours)
 
-  # TODO -  make stream arn dynamic
   dynamo_stream:
     handler: src/dynamo-stream.handler
     timeout: 30
